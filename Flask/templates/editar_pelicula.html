@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block title %}Editar película{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Editar película</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('editar_pelicula', id=pelicula.id) }}">
+                    <div class="mb-2">
+                        <label for="titulo" class="form-label card-text">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" value="{{ pelicula.titulo }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="director" class="form-label card-text">Director</label>
+                        <input type="text" class="form-control" id="director" name="director" value="{{ pelicula.director }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="genero" class="form-label card-text">Género</label>
+                        <input type="text" class="form-control" id="genero" name="genero" value="{{ pelicula.genero }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="anio" class="form-label card-text">Año</label>
+                        <input type="number" class="form-control" id="anio" name="anio" value="{{ pelicula.anio }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar película</button>
+                    <a href="{{ url_for('peliculas') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

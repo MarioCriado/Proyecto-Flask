@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block title %}Editar serie{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Editar serie</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('editar_serie', id=serie.id) }}">
+                    <div class="mb-2">
+                        <label for="titulo" class="form-label card-text">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" value="{{ serie.titulo }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="temporadas" class="form-label card-text">Temporadas</label>
+                        <input type="number" class="form-control" id="temporadas" name="temporadas" value="{{ serie.temporadas }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="genero" class="form-label card-text">Género</label>
+                        <input type="text" class="form-control" id="genero" name="genero" value="{{ serie.genero }}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="anio" class="form-label card-text">Año</label>
+                        <input type="number" class="form-control" id="anio" name="anio" value="{{ serie.anio }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar serie</button>
+                    <a href="{{ url_for('series') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

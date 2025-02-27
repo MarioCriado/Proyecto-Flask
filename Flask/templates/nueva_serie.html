@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block title %}Agregar serie{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Añadir nueva serie</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('nueva_serie') }}">
+                    <div class="mb-2">
+                        <label for="titulo" class="form-label card-text">Título</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingrese el título de la serie" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="temporadas" class="form-label card-text">Temporadas</label>
+                        <input type="number" class="form-control" id="temporadas" name="temporadas" placeholder="Ingrese el número de temporadas" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="genero" class="form-label card-text">Género</label>
+                        <input type="text" class="form-control" id="genero" name="genero" placeholder="Ingrese el género de la serie" required>
+                    </div>
+                    <div class="mb-2">
+                        <label for="anio" class="form-label card-text">Año</label>
+                        <input type="number" class="form-control" id="anio" name="anio" placeholder="Ingrese el año de lanzamiento" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar serie</button>
+                    <a href="{{ url_for('series') }}" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

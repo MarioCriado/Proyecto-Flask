@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block title %}Perfil del usuario{% endblock %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h1 class="mb-4">Perfil de {{ usuario.nombre }}</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Información del Usuario</h5>
+            <p class="card-text">
+              <strong>Email:</strong> {{ usuario.email }}
+            </p>
+            <p class="card-text">
+              <strong>Nombre:</strong> {{ usuario.nombre }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <a class="btn btn-primary" href="{{ url_for('index') }}">Volver al inicio</a>
+    </div>
+  </div>
+{% endblock %}

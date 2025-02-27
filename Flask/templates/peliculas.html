@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+
+{% block title %}Lista de películas{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Lista de películas</h2>
+    <div class="d-flex">
+        <form id="searchForm" class="d-flex me-3" method="GET" action="{{ url_for('peliculas') }}">
+            <select name="order" class="form-select me-2" id="orderSelect">
+                <option value="titulo" {% if order == 'titulo' %}selected{% endif %}>Ordenar por título</option>
+                <option value="anio" {% if order == 'anio' %}selected{% endif %}>Ordenar por año</option>
+            </select>
+            <input type="text" name="search" class="form-control me-2" placeholder="Buscar película" value="{{ request.args.get('search', '') }}"> 
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        <a href="{{ url_for('nueva_pelicula') }}" class="btn btn-success">Añadir película</a>
+    </div>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Director</th>
+            <th>Género</th>
+            <th>Año</th>
+            <th>Calificación</th>
+            <th>Añadida por</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pelicula in peliculas %}
+        <tr>
+            <td>{{ pelicula.titulo }}</td>
+            <td>{{ pelicula.director }}</td>
+            <td>{{ pelicula.genero }}</td>
+            <td>{{ pelicula.anio }}</td>
+            <td>
+                <div class="stars" data-id="{{ pelicula.id }}">
+                    {% for i in range(5) %}
+                        <i class="bi bi-star-fill star {% if i < pelicula.calificacion %}checked{% endif %}" data-index="{{ i + 1 }}"></i>
+                    {% endfor %}
+                </div>
+                <form action="{{ url_for('calificar_pelicula', id=pelicula.id) }}" method="POST" style="display:inline-block;">
+                    <input type="hidden" name="calificacion" id="calificacion_pelicula_{{ pelicula.id }}" value="{{ pelicula.calificacion }}">
+                    <button type="submit" class="btn btn-primary btn-sm">Calificar</button>
+                </form>
+            </td>            
+            <td>{{ pelicula.usuario }}</td>
+            <td>
+                <a href="{{ url_for('editar_pelicula', id=pelicula.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form action="{{ url_for('eliminar_pelicula', id=pelicula.id) }}" method="POST" style="display:inline-block;">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

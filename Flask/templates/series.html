@@ -1,0 +1,63 @@
+{% extends 'index.html' %}
+
+{% block title %}Lista de series{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Lista de series</h2>
+    <div class="d-flex">
+        <form id="searchForm" class="d-flex me-3" method="GET" action="{{ url_for('series') }}">
+            <select name="order" class="form-select me-2" id="orderSelect">
+                <option value="titulo" {% if order == 'titulo' %}selected{% endif %}>Ordenar por título</option>
+                <option value="anio" {% if order == 'anio' %}selected{% endif %}>Ordenar por año</option>
+            </select>
+            <input type="text" name="search" class="form-control me-2" placeholder="Buscar serie" value="{{ request.args.get('search', '') }}"> 
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        <a href="{{ url_for('nueva_serie') }}" class="btn btn-success">Añadir serie</a>
+    </div>
+</div>
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Temporadas</th>
+            <th>Género</th>
+            <th>Año</th>
+            <th>Calificación</th>
+            <th>Añadida por</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for serie in series %}
+        <tr>
+            <td>{{ serie.titulo }}</td>
+            <td>{{ serie.temporadas }}</td>
+            <td>{{ serie.genero }}</td>
+            <td>{{ serie.anio }}</td>
+            <td>
+                <div class="stars" data-id="{{ serie.id }}">
+                    {% for i in range(5) %}
+                        <i class="bi bi-star-fill star {% if i < serie.calificacion %}checked{% endif %}" data-index="{{ i + 1 }}"></i>
+                    {% endfor %}
+                </div>
+                <form action="{{ url_for('calificar_serie', id=serie.id) }}" method="POST" style="display:inline-block;">
+                    <input type="hidden" name="calificacion" id="calificacion_serie_{{ serie.id }}" value="{{ serie.calificacion }}">
+                    <button type="submit" class="btn btn-primary btn-sm">Calificar</button>
+                </form>
+            </td>            
+            <td>{{ serie.usuario }}</td>
+            <td>
+                <a href="{{ url_for('editar_serie', id=serie.id) }}" class="btn btn-warning btn-sm">Editar</a>
+                <form action="{{ url_for('eliminar_serie', id=serie.id) }}" method="POST" style="display:inline-block;">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
